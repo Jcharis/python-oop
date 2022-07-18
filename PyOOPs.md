@@ -29,6 +29,7 @@ By Jesse E.Agbemabiase (JCharis)
 
 ##### What is an object and what is a class?
 + A class is a blueprint (like a questionaire that you have to fill with data or information
+* classes are just pieces of code that describe how to produce an object.
 + An instance is a copy of the class with actual values (your specific copy is an instance of the class; it contains actual information relevant to you)
 
 
@@ -48,6 +49,10 @@ print("Type of a tuple",type(d))
     Type of a list <class 'list'>
     Type of a tuple <class 'tuple'>
 
+
++ str, the class that creates strings objects, and 
++ int the class that creates integer objects. 
++ type is just the class that creates class objects.
 
 
 ```python
@@ -85,6 +90,49 @@ object => class => type
 ```python
 # the type of an object is a type
 print(type(object))
+```
+
+    <class 'type'>
+
+
+#### Narrative
++ Everything, and I mean everything, is an object in Python. That includes integers, strings, functions and classes. 
++ All of them are objects. And all of them have been created from a class
+
+#### Metaclass
++ a metaclass is just the stuff that creates class objects.
++ type is a function 
++ type is a metaclass that python use to create class object
++ type is the built-in metaclass Python uses
+A metaclass is the class of a class. A class defines how an instance of the class (i.e. an object) behaves while a metaclass defines how a class behaves. A class is an instance of a metaclass.
+The main purpose of a metaclass is to change the class automatically, when it's created.
+
+You usually do this for APIs, where you want to create classes matching the current context.They are simply used for:
+ + intercept a class creation
+ + modify the class
+ + return the modified class
+ 
+The main use case for a metaclass is creating an API. A typical example of this is the Django ORM.
+https://stackoverflow.com/questions/100003/what-are-metaclasses-in-python
+
+Their use for alteration of a class can be done with monkeypatching or with class decorators
+
+
+
+
+```python
+# using the .__class__ to check for the fact that everything in python is an object and has been created from a class 
+# same as doing type()
+print(a.__class__)
+```
+
+    <class 'str'>
+
+
+
+```python
+# What is the type of any type or what is the class of any .__class__
+print(a.__class__.__class__)
 ```
 
     <class 'type'>
@@ -1256,8 +1304,8 @@ As the name suggests, it safeguards the internal contents of a class like a caps
 ##### Summary
 + capsule
 + data security and restriction
-    - private: __
-    - protected:_
+    - private: _
+    - protected:__
     - public:
     - @property
 + use getters and setters to access data
@@ -1268,6 +1316,14 @@ As the name suggests, it safeguards the internal contents of a class like a caps
 + Data security/protection
 + Code readability
 
+_foo: Only a convention. A way for the programmer to indicate that the variable is private (whatever that means in Python).
+
+__foo: This has real meaning. The interpreter replaces this name with _classname__foo as a way to ensure that the name will not overlap with a similar name in another class.
+
+`__foo__`: Only a convention. A way for the Python system to use names that won't conflict with user names.
+
+##### Name mangling
+Name mangling is intended to give classes an easy way to define “private” instance variables and methods, without having to worry about instance variables defined by derived classes, or mucking with instance variables by code outside the class. Note that the mangling rules are designed mostly to avoid accidents; it still is possible for a determined soul to access or modify a variable that is considered private.
 
 
 ```python
@@ -1703,6 +1759,7 @@ Composition is a stricter form of aggregation. It occurs when the two classes yo
 Composition allows you to express that relationship by saying a Horse has a Tail.
 Composition enables you to reuse code by adding objects to other objects, as opposed to inheriting the interface and implementation of other classes.
 This provides better adaptability to change and allows applications to introduce new requirements without affecting existing code.
+Composition:delegate the work
 
 
 ```python
@@ -1768,11 +1825,12 @@ print(s1)
     Student(first_name=Peter,student_id=234,address=Address(street=Wall Street,city=Manhattan))
 
 
+#### Narrative
++ The Address is initialized when the student is initialized because it is part of the Student Class
++ When you delete the student object the address is also deleted
 
-```python
 #### Using Composition Instead of Inheritance
 + Implement a Stack: FILO
-```
 
 
 ```python
@@ -1901,17 +1959,12 @@ print(s)
     Stack([4])
 
 
-
-```python
 ### Abstraction
-
-
 
 #### Goal of Abstraction
 + Code reusability
 + Flexibility of implementation
 + Multiple Inheritance
-```
 
 
 ```python
@@ -1925,6 +1978,9 @@ getattr(p,'first_name')
     'Mark'
 
 
+
+#### When to Use ABC in Python
+abc: abstract base class
 
 
 ```python
